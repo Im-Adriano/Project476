@@ -11,5 +11,6 @@ file(GLOB helloworld_SRC
 )
 # Add source to this project's executable.
 add_executable (Project476  ${helloworld_SRC})
+add_library(_Project476 SHARED ${helloworld_SRC} )
 
 # TODO: Add tests and install targets if needed.
