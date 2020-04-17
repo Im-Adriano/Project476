@@ -2,7 +2,9 @@
 # project specific logic here.
 #
 cmake_minimum_required (VERSION 3.8)
-
+set(CMAKE_BUILD_TYPE release)
+set(CMAKE_CXX_FLAGS_DEBUG "/g")
+set(CMAKE_CXX_FLAGS_RELEASE "/O3")
 project ("Project476")
 
 file(GLOB helloworld_SRC

@@ -22,7 +22,7 @@ void EasySocket::connectServer(std::string ip, std::string port)
 	hints.ai_protocol = IPPROTO_TCP;
 
 	// Resolve the server address and port
-	int iResult = getaddrinfo("localhost", port.c_str(), &hints, &result);
+	int iResult = getaddrinfo(ip.c_str(), port.c_str(), &hints, &result);
 	if (iResult != 0) {
 		printf("getaddrinfo failed with error: %d\n", iResult);
 		WSACleanup();
@@ -94,12 +94,7 @@ void EasySocket::fileReceive(std::string filename)
 		perror("Error");
 		return;
 	}
-	/*
-	int recs = recv(m_socket, length, 32, 0);
 
-	length[recs] = '\0';
-	int size = atoi(length);
-	*/
 	char buffer[1030];
 
 	int size = 1024;

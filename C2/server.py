@@ -94,7 +94,7 @@ def main():
     )
 
     try:
-        server_addr = ('', 8888)
+        server_addr = ('192.168.214.1', 8888)
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
             sock.bind(server_addr)
             sock.listen(1)
