@@ -1,10 +1,6 @@
 #define WIN32_LEAN_AND_MEAN
 #include "command_socket.h"
-/*
-#include <windows.h>
-#include <winsock2.h>
-#include <ws2tcpip.h>
-*/
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string>
@@ -14,12 +10,6 @@
 #include <string.h>    
 #include <algorithm>
 #include "EasySocket.h"
-
-// Need to link with Ws2_32.lib, Mswsock.lib, and Advapi32.lib
-//#pragma comment (lib, "Ws2_32.lib")
-//#pragma comment (lib, "Mswsock.lib")
-//#pragma comment (lib, "AdvApi32.lib")
-
 
 #define DEFAULT_BUFLEN 512
 #define DEFAULT_PORT "8888"
@@ -105,7 +95,6 @@ int recieve_commands()
                 sock.fileSend(arguments);
             }
             else if (command.compare("PUSH") == 0) {
-                //printf(arguments.c_str());
                 arguments.erase(std::remove_if(arguments.begin(), arguments.end(), isspace), arguments.end());
                 sock.fileReceive(arguments);
             }
